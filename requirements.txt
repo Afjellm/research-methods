@@ -1,0 +1,4 @@
+scipy
+pulp
+pandas
+ace_tools
