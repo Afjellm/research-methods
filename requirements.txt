@@ -2,3 +2,6 @@ scipy
 pulp
 pandas
 ace_tools
+geopandas
+shapely
+python_tsp
