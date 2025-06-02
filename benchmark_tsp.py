@@ -2,7 +2,7 @@ from tsp_problem import run_tsp_algorithms
 import time
 import pandas as pd
 
-def run_multiple_tsp_trials(problem_sizes=[50,100,200,400], n_trials=200):
+def run_multiple_tsp_trials(problem_sizes=[50,100,200,400], n_trials=2):
     records = []
 
     for size in problem_sizes:

@@ -139,11 +139,6 @@ def run_tsp_algorithms(seed, problem_size, plot: bool = False):
             unvisited.remove(next_city)
         return route
 
-    start_nn = time.time()
-    nn_route = nearest_neighbor()
-    end_nn = time.time()
-    nn_dist = route_distance(nn_route)
-
     # === Ant Colony Optimization ===
     class AntColony:
         def __init__(self, dist_matrix, n_ants=50, n_best=5, n_iterations=100, decay=0.1, alpha=1, beta=2):
@@ -205,17 +200,21 @@ def run_tsp_algorithms(seed, problem_size, plot: bool = False):
                 prob_sum = prob.sum()
             return prob / prob_sum
 
+
+    start_lib = time.time()
+    route, cost = solve_tsp_local_search(dist_matrix)
+    end_lib = time.time()
     start_aco = time.time()
     aco = AntColony(dist_matrix_safe)
     aco_route, aco_dist = aco.run()
     end_aco = time.time()
 
-    start_lib = time.time()
-    route, cost = solve_tsp_local_search(dist_matrix)
-    end_lib = time.time()
 
-    print("Best route found:", route)
-    print("Total cost:", cost)
+    start_nn = time.time()
+    nn_route = nearest_neighbor()
+    end_nn = time.time()
+    nn_dist = route_distance(nn_route)
+
 
     # === Runtime Summary ===
     print(f"Nearest Neighbor:       {nn_dist:.2f} km, Time: {end_nn - start_nn:.2f}s")
@@ -232,7 +231,7 @@ def run_tsp_algorithms(seed, problem_size, plot: bool = False):
             "Time (s)": round(end_aco - start_aco, 2)
         },
         "Lib Optimization": {
-            "Distance (km)": round(aco_dist, 2),  # Double-check if this should be a different variable
+            "Distance (km)": round(aco_dist, 2),
             "Time (s)": round(end_lib - start_lib, 2)
         }
     }
